@@ -1,0 +1,27 @@
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: aksappdeploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: aksapp
+    spec:
+      containers:
+        - name: app 
+          image: <>.azurecr.io/img:v1
+          ports:
+          - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: aksappservice
+spec:
+    type: LoadBalancer
+    ports:
+    - port: 8080 
+    selector:
+        app: aksapp
